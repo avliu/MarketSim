@@ -41,9 +41,22 @@ public class Market {
         }
     }
 
+    public void print_expectations() {
+        String b = "BUYERS:  ";
+        for (int i = 0; i < buyer_size; i++) {
+            b += (i + ":" + (int)buyers.get(i).expected_price + " ");
+        }
+        System.out.println(b);
+        String s = "SELLERS: ";
+        for (int i = 0; i < seller_size; i++) {
+            s += (i + ":" + (int)sellers.get(i).expected_price + " ");
+        }
+        System.out.println(s);
+    }
+
     public void day() {
 
-        System.out.println("new day");
+//        System.out.println("new day");
         Integer[] buyer_id_arr = buyers.keySet().toArray(new Integer[buyer_size]);
         Integer[] seller_id_arr = sellers.keySet().toArray(new Integer[seller_size]);
         List<Integer> buyer_ids = new ArrayList<>(Arrays.asList(buyer_id_arr));
@@ -51,7 +64,7 @@ public class Market {
         int round = 0;
 
         while (!buyer_ids.isEmpty() && !seller_ids.isEmpty()) {
-            System.out.println("round " + round);
+//            System.out.println("round " + round);
 
             HashSet<Integer> delete_buyers = new HashSet();
             HashSet<Integer> delete_sellers = new HashSet();
@@ -79,16 +92,16 @@ public class Market {
                         delete_sellers.add(s.id);
                         b.update_expected_price(p, true);
                         s.update_expected_price(p, true);
-                        System.out.println("SUCCESS: " +
-                                "buyer " + b.id + " " + (int)b.bound + "/" + (int)b.expected_price +
-                                ", seller " + s.id + " " + (int)s.bound + "/" + (int)s.expected_price +
-                                ", price " + (int)p);
+//                        System.out.println("SUCCESS: " +
+//                                "buyer " + b.id + " " + (int)b.bound + "/" + (int)b.expected_price +
+//                                ", seller " + s.id + " " + (int)s.bound + "/" + (int)s.expected_price +
+//                                ", price " + (int)p);
                     }
                     else {
-                        System.out.println("FAILURE: " +
-                                "buyer " + b.id + " " + (int)b.bound + "/" + (int)b.expected_price +
-                                ", seller " + s.id + " " + (int)s.bound + "/" + (int)s.expected_price +
-                                ", price " + (int)p);
+//                        System.out.println("FAILURE: " +
+//                                "buyer " + b.id + " " + (int)b.bound + "/" + (int)b.expected_price +
+//                                ", seller " + s.id + " " + (int)s.bound + "/" + (int)s.expected_price +
+//                                ", price " + (int)p);
                     }
                 }
             }
@@ -99,7 +112,7 @@ public class Market {
                     Buyer b = buyers.get(i);
                     boolean flag = true;
                     for (int j : seller_ids) {
-                        if (b.ids.contains(sellers.get(j))) {
+                        if (b.ids.contains(j)) {
                             flag = false;
                             break;
                         }
@@ -120,7 +133,7 @@ public class Market {
                     Seller s = sellers.get(i);
                     boolean flag = true;
                     for (int j : buyer_ids) {
-                        if (s.ids.contains(buyers.get(j))) {
+                        if (s.ids.contains(j)) {
                             flag = false;
                             break;
                         }
@@ -145,7 +158,14 @@ public class Market {
                 seller_ids.remove(s);
             }
             round ++;
+
+//            System.out.println("Remaining buyers: " + buyer_ids);
+//            System.out.println("Remaining sellers: " + seller_ids);
+
+
         }
+        print_expectations();
         reset();
     }
+
 }

@@ -2,8 +2,10 @@ import java.util.HashSet;
 
 public class Seller extends Transactor{
 
-    public Seller(HashSet<Integer> buyer_ids) {
-        super(buyer_ids);
+    public Seller(int id, HashSet<Integer> buyer_ids) {
+        super(id, buyer_ids);
+        bound = Math.random() * max/2;
+        expected_price = Math.random() * (max-bound) + bound;
     }
 
     public double surplus(double price) {
@@ -11,17 +13,10 @@ public class Seller extends Transactor{
     }
 
     public boolean satisfied(double price) {
-        if(ids.size()>1){
+        if (!desperate){
             return price >= expected_price;
         }
         return price >= bound;
     }
 
-    public void update_expected_price(double price){
-        double new_expected_price = expected_price + (price-expected_price) * swing;
-        if (new_expected_price < bound) {
-            new_expected_price = bound;
-        }
-        expected_price = new_expected_price;
-    }
 }

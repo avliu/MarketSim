@@ -4,10 +4,12 @@ import java.util.HashSet;
 
 public class Main {
 
-    public static void main(String[] args) {
 
-        Market m = new Market(2, 2);
-        for (int i = 0; i < 50; i++) {
+
+    public static void main(String[] args) {
+        Market m = Market.less_buyers();
+        m.print_bounds();
+        for (int i = 0; i < 1000; i++) {
             m.day();
         }
     }

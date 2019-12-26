@@ -14,23 +14,36 @@ abstract class Transactor {
 
     public Transactor(int id, HashSet<Integer> ids) {
         this.id = id;
-        swing = 0.1;
+        swing = 0.01;
+        this.ids = ids;
+        desperate = false;
+    }
+
+    public Transactor(int id, HashSet<Integer> ids, double bound, double expected_price) {
+        this.id = id;
+        this.bound = bound;
+        this.expected_price = expected_price;
+        swing = 0.05;
         this.ids = ids;
         desperate = false;
     }
 
 
-
-    public static boolean transact(Buyer b, Seller s, double p) {
+    public static double transact(Buyer b, Seller s) {
         b.ids.remove(s.id);
         s.ids.remove(b.id);
-        if (b.satisfied(p) && s.satisfied(p)) {
-            return true;
+        double b_price = b.expected_price;
+        double s_price = s.expected_price;
+        if (b.desperate) b_price = b.acquiesce_price();
+        if (s.desperate) s_price = s.acquiesce_price();
+        if (s_price <= b_price) {
+            // price of transaction
+            return (b_price + s_price)/2;
         }
-        return false;
+        else {
+            return -1;
+        }
     }
-
-    public static double propose_price(Seller s){ return s.expected_price; }
 
     public static double transaction_surplus(Buyer b, Seller s, double p) {
         return b.surplus(p) + s.surplus(p);
@@ -45,12 +58,14 @@ abstract class Transactor {
         return true;
     }
 
-    public void update_expected_price(double price, boolean success){
+    public abstract double aggressive_price();
+    public abstract double acquiesce_price();
+    public void update_expected_price(boolean success) {
         if (success) {
-            expected_price = expected_price + (price-expected_price) * swing;
+            expected_price = aggressive_price();
         }
-        else{
-            expected_price = expected_price + (bound-expected_price) * swing;
+        else {
+            expected_price = acquiesce_price();
         }
     }
 
@@ -60,6 +75,5 @@ abstract class Transactor {
     }
 
     abstract double surplus(double price);
-    abstract boolean satisfied(double price);
 
 }

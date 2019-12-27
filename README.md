@@ -1,11 +1,13 @@
 # MarketSim
 
 -- MOTIVATION --
+
 Primary motivation comes from the Primer channel: https://www.youtube.com/watch?v=PNtKXWNKGN8&t=147s.
 After watching the above video and taking a basic economics class, I wanted to replicate the simulations ran in the video.
 
 
 -- IMPLEMENTATION --
+
 The rules for this "market" simulator are adapted from the Primer video above. Basically, there are Buyers and Sellers in the market for a certain product, which is sold anywhere between 0 and 100 dollars. The Buyers have an absolute upper limit on the amount they'll pay for a product, but they come to the market with an expected price they want to pay. Likewise, Sellers have an absolute lower limit on the amount they'll pay for a product, but also an expected price. 
 
 Each day, Buyers approach Sellers in a random order, and perform a transaction if they have agreeable expected prices. A Buyer and Seller pair are agreeable if the expected price of the Buyer is greater than or equal to that of the Seller. In this case, they perform a transaction at a price in the middle of their expectations. Intuitively, the Buyer went in expecting to buy something at a price X, but got to buy it for a cheaper price Y; and the Seller, who expected to sell something at a price Z, actually got to sell it at a greater price Y. Both parties are happy. As an aside, the surplus generated for a Buyer or Seller is the absolute difference between the transaction price and their absolute limits.
@@ -18,10 +20,12 @@ These are the basic rules. The simulator is designed to perform multiple "days" 
 
 
 -- USAGE --
+
 Initialize a market with their Buyers and Sellers (along with their absolute limits and initial expected prices). This is done by specifying the arrays buyer_bounds, buyer_expectations, seller_bounds, and seller_expectations. There are three examples in the main class. One can alternatively specify their own, just make sure that the numbers are within 0-100, and that the Buyers arrays match length and the Sellers arrays match length.
 
 
 -- OBSERVATIONS --
+
 The observations mirror that of the Primer video...
 
 When the Buyers and Sellers are even, their transaction price and their expected price meet in the middle. In economics lingo, this is an "equilibrium." Another interesting observation here is that buyers with limits below equilibrium and sellers with limits above equilibrium are phased out of the market; they never find a transaction. As the video points out, "their participation in the market is actually counterproductive." 
@@ -32,6 +36,7 @@ When there are less Sellers, then the Buyers must now compete. In the same fashi
 
 
 -- IMPROVEMENTS --
+
 Refactoring (the code itself isn't very clean).
 Allow instituting a price floor or price ceiling.
 Initializing multiple markets, having Buyers and Sellers interact between them.

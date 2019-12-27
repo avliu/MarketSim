@@ -65,13 +65,13 @@ public class Market {
         }
     }
 
-    public void print_expectations() {
-        String b = "BUYERS:  ";
+    public void print_report(double b_surplus, double s_surplus) {
+        String b = "BUYER SURPLUS: " + b_surplus + ", EXPECTATIONS:  ";
         for (int i = 0; i < buyer_size; i++) {
             b += (i + ":" + (int)buyers.get(i).expected_price + " ");
         }
         System.out.println(b);
-        String s = "SELLERS: ";
+        String s = "SELLER SURPLUS: " + s_surplus + ", EXPECTATIONS: ";
         for (int i = 0; i < seller_size; i++) {
             s += (i + ":" + (int)sellers.get(i).expected_price + " ");
         }
@@ -80,12 +80,13 @@ public class Market {
     }
 
     public void print_info() {
-        String b = "INFO BUYERS:  ";
+        System.out.println("(format is id:bound/expected price)");
+        String b = "BUYER INFO:  ";
         for (int i = 0; i < buyer_size; i++) {
             b += (i + ":" + (int)buyers.get(i).bound + "/" + (int)buyers.get(i).expected_price + " ");
         }
         System.out.println(b);
-        String s = "INFO SELLERS: ";
+        String s = "SELLERS INFO: ";
         for (int i = 0; i < seller_size; i++) {
             s += (i + ":" + (int)sellers.get(i).bound + "/" + (int)sellers.get(i).expected_price + " ");
         }
@@ -93,51 +94,14 @@ public class Market {
         System.out.println();
     }
 
-    public static Market even() {
-        int[] buyer_bounds = {100,90,80,70,60,50,40,30,20,10};
-        int[] seller_bounds = {10,20,30,40,50,60,70,80,90,95};
-        int[] buyer_exp = {90,80,70,60,50,40,30,20,10,5};
-        int[] seller_exp = {20,30,40,50,60,70,80,90,95,100};
-        Market m = new Market(buyer_bounds, seller_bounds, buyer_exp, seller_exp);
-        return m;
-    }
-
-    public static Market less_buyers() {
-        int[] buyer_bounds = {90};
-        int[] seller_bounds = {10,20};
-        int[] buyer_exp = {70};
-        int[] seller_exp = {30,40};
-        Market m = new Market(buyer_bounds, seller_bounds, buyer_exp, seller_exp);
-        return m;
-    }
-
-    public static Market less_sellers() {
-        int[] buyer_bounds = {90,80};
-        int[] seller_bounds = {10};
-        int[] buyer_exp = {70,60};
-        int[] seller_exp = {30};
-        Market m = new Market(buyer_bounds, seller_bounds, buyer_exp, seller_exp);
-        return m;
-    }
-
-    public static Market less_sellers2() {
-        int[] buyer_bounds = {90,85,80};
-        int[] seller_bounds = {10,20};
-        int[] buyer_exp = {70,65,60};
-        int[] seller_exp = {30,40};
-        Market m = new Market(buyer_bounds, seller_bounds, buyer_exp, seller_exp);
-        return m;
-    }
-
-
     public void day() {
 
-//        System.out.println("new day");
         Integer[] buyer_id_arr = buyers.keySet().toArray(new Integer[buyer_size]);
         Integer[] seller_id_arr = sellers.keySet().toArray(new Integer[seller_size]);
         List<Integer> buyer_ids = new ArrayList<>(Arrays.asList(buyer_id_arr));
         List<Integer> seller_ids = new ArrayList<>(Arrays.asList(seller_id_arr));
-        int round = 0;
+        double buyer_surplus = 0;
+        double seller_surplus = 0;
 
         while (!buyer_ids.isEmpty() && !seller_ids.isEmpty()) {
 //            System.out.println("    round " + round);
@@ -166,17 +130,14 @@ public class Market {
                     if (p >= 0) {
                         delete_buyers.add(b.id);
                         delete_sellers.add(s.id);
-                        System.out.println("SUCCESS: " +
-                                "buyer " + b.id + ":" + (int)b.expected_price +
-                                ", seller " + s.id + ":" + (int)s.expected_price +
+                        System.out.println("TRANSACTION: " +
+                                "buyer #" + b.id +
+                                ", seller #" + s.id +
                                 ", price " + (int)p);
                         b.update_expected_price(true);
                         s.update_expected_price(true);
-                    }
-                    else {
-//                        System.out.println("FAILURE: " +
-//                                "buyer " + b.id + ":" + (int)b.expected_price +
-//                                ", seller " + s.id + ":" + (int)s.expected_price);
+                        buyer_surplus += (b.bound - p);
+                        seller_surplus += (p - s.bound);
                     }
                 }
             }
@@ -232,7 +193,6 @@ public class Market {
             for (Integer s : delete_sellers) {
                 seller_ids.remove(s);
             }
-            round ++;
 
 //            System.out.println("Remaining buyers: " + buyer_ids);
 //            System.out.println("Remaining sellers: " + seller_ids);
@@ -247,7 +207,7 @@ public class Market {
             sellers.get(s).update_expected_price(false);
         }
 
-        print_expectations();
+        print_report(buyer_surplus, seller_surplus);
         reset();
     }
 

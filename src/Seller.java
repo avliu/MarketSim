@@ -5,8 +5,24 @@ public class Seller extends Transactor{
     public double surplus(double price) {
         return price - bound;
     }
-    public double aggressive_price() { return expected_price + ((max - expected_price) * swing); }
-    public double acquiesce_price() { return expected_price - (expected_price * swing); }
+    public double aggressive_price() {
+        double new_price = expected_price + swing;
+        if (new_price > max) {
+            return max;
+        }
+        else {
+            return new_price;
+        }
+    }
+    public double acquiesce_price() {
+        double new_price = expected_price - swing;
+        if (new_price < bound) {
+            return bound;
+        }
+        else {
+            return new_price;
+        }
+    }
 
     public Seller(int id, HashSet<Integer> buyer_ids) {
         super(id, buyer_ids);

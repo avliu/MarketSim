@@ -4,6 +4,7 @@
     <list default="true" id="ce30b04e-a451-4795-b382-f1d1c4eb3dd5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Markets/Buyer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Markets/Buyer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Markets/Seller.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Markets/Seller.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Markets/Transactor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Markets/Transactor.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Buyer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Buyer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
@@ -102,7 +103,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Market.java</url>
-          <line>202</line>
+          <line>221</line>
           <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>

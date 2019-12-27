@@ -14,7 +14,7 @@ abstract class Transactor {
 
     public Transactor(int id, HashSet<Integer> ids) {
         this.id = id;
-        swing = 0.01;
+        swing = 2;
         this.ids = ids;
         desperate = false;
     }
@@ -23,7 +23,7 @@ abstract class Transactor {
         this.id = id;
         this.bound = bound;
         this.expected_price = expected_price;
-        swing = 0.05;
+        swing = 2;
         this.ids = ids;
         desperate = false;
     }

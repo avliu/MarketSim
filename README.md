@@ -4,6 +4,7 @@
 Primary motivation comes from the Primer channel: https://www.youtube.com/watch?v=PNtKXWNKGN8&t=147s.
 After watching the above video and taking a basic economics class, I wanted to replicate the simulations ran in the video.
 
+
 -- IMPLEMENTATION --
 The rules for this "market" simulator are adapted from the Primer video above. Basically, there are Buyers and Sellers in the market for a certain product, which is sold anywhere between 0 and 100 dollars. The Buyers have an absolute upper limit on the amount they'll pay for a product, but they come to the market with an expected price they want to pay. Likewise, Sellers have an absolute lower limit on the amount they'll pay for a product, but also an expected price. 
 
@@ -15,8 +16,10 @@ After each day, the Buyers and Sellers adjust their expected price. If they tran
 
 These are the basic rules. The simulator is designed to perform multiple "days" until some sort of equilibrium is reached.
 
+
 -- USAGE --
 Initialize a market with their Buyers and Sellers (along with their absolute limits and initial expected prices). This is done by specifying the arrays buyer_bounds, buyer_expectations, seller_bounds, and seller_expectations. There are three examples in the main class. One can alternatively specify their own, just make sure that the numbers are within 0-100, and that the Buyers arrays match length and the Sellers arrays match length.
+
 
 -- OBSERVATIONS --
 The observations mirror that of the Primer video...
@@ -26,6 +29,7 @@ When the Buyers and Sellers are even, their transaction price and their expected
 However, when there are less Buyers, the Sellers compete. There is always at least one seller who can't find someone to transact with and thus must lower their expected price. This continues as the transaction and expected prices drop to the absolute limits for the Sellers. In this case, most of the surplus generated from these transactions go to the Buyers.
 
 When there are less Sellers, then the Buyers must now compete. In the same fashion as the previous example, the prices rise to the absolute limits of the Buyers. Most of the surplus generated here go to the Seller.
+
 
 -- IMPROVEMENTS --
 Refactoring (the code itself isn't very clean).
